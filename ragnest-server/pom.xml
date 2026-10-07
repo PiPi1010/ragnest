@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.ragnest</groupId>
+        <artifactId>ragnest</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ragnest-server</artifactId>
+    <name>ragnest-server</name>
+    <description>启动模块：应用入口与配置</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-admin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-ai</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-vector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-tenant</artifactId>
+        </dependency>
+
+        <!-- Actuator：健康检查与监控 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 打可执行 jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.ragnest</groupId>
+        <artifactId>ragnest</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ragnest-parser</artifactId>
+    <name>ragnest-parser</name>
+    <description>文档解析层：多格式解析、分块、解析流水线</description>
+
+    <dependencies>
+        <!-- 内部模块 -->
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-core</artifactId>
+        </dependency>
+
+        <!-- Spring AI 核心（Document、DocumentReader、TextSplitter 等） -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-commons</artifactId>
+        </dependency>
+
+        <!-- Spring AI：Markdown 文档读取 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-markdown-document-reader</artifactId>
+        </dependency>
+
+        <!-- Spring AI：HTML 文档读取（jsoup） -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-jsoup-document-reader</artifactId>
+        </dependency>
+    </dependencies>
+</project>

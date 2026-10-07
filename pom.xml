@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.8</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.ragnest</groupId>
+    <artifactId>ragnest</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>ragnest</name>
+    <description>RAG Nest - 企业级知识库管理后台（Spring AI 2.0）</description>
+
+    <modules>
+        <module>ragnest-common</module>
+        <module>ragnest-core</module>
+        <module>ragnest-tenant</module>
+        <module>ragnest-security</module>
+        <module>ragnest-parser</module>
+        <module>ragnest-vector</module>
+        <module>ragnest-ai</module>
+        <module>ragnest-admin</module>
+        <module>ragnest-server</module>
+        <module>ragnest-sdk</module>
+    </modules>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- 依赖版本统一管理 -->
+        <!-- Spring AI 2.0.x 兼容 Spring Boot 4.x + Spring Framework 7（本项目的 Boot 4.0.8 匹配） -->
+        <spring-ai.version>2.0.1</spring-ai.version>
+        <!-- JWT（jjwt，Boot BOM 未管理） -->
+        <jjwt.version>0.13.0</jjwt.version>
+    </properties>
+
+    <dependencies>
+        <!-- Lombok：所有子模块继承，编译期生成 getter/setter/builder 等样板代码 -->
+        <!-- 版本由 spring-boot-starter-parent 管理（1.18.46，支持 JDK 21） -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring AI BOM：统一管理 Spring AI 2.0.x 所有模块版本 -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 内部模块版本统一管理 -->
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-tenant</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-parser</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-vector</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-ai</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-admin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ragnest</groupId>
+                <artifactId>ragnest-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

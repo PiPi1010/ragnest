@@ -1,0 +1,29 @@
+# 开发环境配置
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ragnest
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  # 本地 Ollama 模型（开发测试）
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: qwen2.5:7b
+      embedding:
+        model: bge-m3
+
+# JWT 配置
+ragnest:
+  jwt:
+    secret: dev-secret-key-change-me-in-production-0123456789
+    expiration: 86400000
+  vector:
+    dimensions: 1024
+    table-name: vector_store
+
+logging:
+  level:
+    com.ragnest: debug
