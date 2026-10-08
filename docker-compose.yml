@@ -16,5 +16,40 @@ services:
       timeout: 5s
       retries: 5
 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ragnest-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ragnest-ollama:/root/.ollama
+    environment:
+      # 走宿主机 Clash 代理访问模型仓库（registry.ollama.ai）
+      HTTP_PROXY: http://host.docker.internal:7890
+      HTTPS_PROXY: http://host.docker.internal:7890
+      NO_PROXY: localhost,127.0.0.1
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 一次性拉取模型（启动后自动 pull，跑完退出）
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: ragnest-ollama-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ollama pull qwen2.5:7b
+        ollama pull bge-m3
+    environment:
+      OLLAMA_HOST: ollama:11434
+    restart: "no"
+
 volumes:
   ragnest-pgdata:
+  ragnest-ollama:

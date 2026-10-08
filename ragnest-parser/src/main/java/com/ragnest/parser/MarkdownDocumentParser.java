@@ -1,16 +1,15 @@
 package com.ragnest.parser;
 
-import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
-import org.springframework.ai.document.Document;
-
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Markdown 文档解析器。
  *
- * <p>基于 Spring AI 的 {@link MarkdownDocumentReader} 实现。</p>
+ * <p>Markdown 本质是纯文本，解析阶段直接读取文本内容。
+ * 结构化切分（按标题分块）由后续的 {@link MarkdownHeaderSplitter} 负责。</p>
  */
 public class MarkdownDocumentParser implements DocumentParser {
 
@@ -23,27 +22,20 @@ public class MarkdownDocumentParser implements DocumentParser {
 
     @Override
     public ParsedDocument parse(InputStream inputStream, String filename) {
-        // Markdown 本质是纯文本，直接读取
-        String content = readAll(inputStream);
-
-        // 复用 Spring AI 的 MarkdownDocumentReader 做结构化解析
-        Document doc = new MarkdownDocumentReader(content).read().stream()
-                .findFirst()
-                .orElse(Document.builder().text(content).build());
-
-        return ParsedDocument.builder()
-                .content(doc.getText())
-                .metadata(doc.getMetadata())
-                .build()
-                .addMetadata("filename", filename)
-                .addMetadata("fileType", "markdown");
-    }
-
-    private String readAll(InputStream inputStream) {
+        String content;
         try (InputStream is = inputStream) {
-            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            content = new String(is.readAllBytes(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new IllegalStateException("读取 Markdown 文档失败: " + e.getMessage(), e);
         }
+
+        Map<String, Object> metadata = new LinkedHashMap<>();
+        metadata.put("filename", filename);
+        metadata.put("fileType", "markdown");
+
+        return ParsedDocument.builder()
+                .content(content)
+                .metadata(metadata)
+                .build();
     }
 }

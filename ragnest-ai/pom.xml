@@ -46,6 +46,12 @@
             <artifactId>spring-ai-rag</artifactId>
         </dependency>
 
+        <!-- Spring AI：Ollama 模型（开发环境本地模型） -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-ollama</artifactId>
+        </dependency>
+
         <!-- Spring Boot WebMVC（提供 @RestController、SSE 流式所需的响应能力） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,13 +1,16 @@
 package com.ragnest.admin.controller;
 
 import com.ragnest.admin.assembler.DocumentAssembler;
+import com.ragnest.admin.service.DocumentIngestionService;
 import com.ragnest.admin.vo.DocumentVO;
 import com.ragnest.common.exception.BizException;
 import com.ragnest.common.exception.CommonErrorCode;
 import com.ragnest.common.result.Result;
 import com.ragnest.core.model.Document;
 import com.ragnest.core.repository.JpaDocumentRepository;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,9 +22,22 @@ import java.util.List;
 public class DocumentController {
 
     private final JpaDocumentRepository documentRepository;
+    private final DocumentIngestionService documentIngestionService;
 
-    public DocumentController(JpaDocumentRepository documentRepository) {
+    public DocumentController(JpaDocumentRepository documentRepository,
+                              DocumentIngestionService documentIngestionService) {
         this.documentRepository = documentRepository;
+        this.documentIngestionService = documentIngestionService;
+    }
+
+    /**
+     * 上传文档并入库（解析 → 分块 → 向量化 → 写库）。
+     */
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Result<DocumentVO> upload(@RequestParam Long knowledgeBaseId,
+                                     @RequestParam("file") MultipartFile file) {
+        Document document = documentIngestionService.ingest(knowledgeBaseId, file);
+        return Result.success(DocumentAssembler.toVO(document));
     }
 
     /**

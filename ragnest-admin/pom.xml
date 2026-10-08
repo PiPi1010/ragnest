@@ -32,6 +32,10 @@
             <groupId>com.ragnest</groupId>
             <artifactId>ragnest-tenant</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ragnest</groupId>
+            <artifactId>ragnest-parser</artifactId>
+        </dependency>
 
         <!-- Web MVC（Controller） -->
         <dependency>
