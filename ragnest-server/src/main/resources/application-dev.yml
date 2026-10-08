@@ -6,6 +6,15 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
+  # JPA 配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
   # 本地 Ollama 模型（开发测试）
   ai:
     ollama:

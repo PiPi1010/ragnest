@@ -6,7 +6,7 @@ import com.ragnest.common.exception.BizException;
 import com.ragnest.common.exception.CommonErrorCode;
 import com.ragnest.common.result.Result;
 import com.ragnest.core.model.Document;
-import com.ragnest.core.repository.DocumentRepository;
+import com.ragnest.core.repository.JpaDocumentRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +18,9 @@ import java.util.List;
 @RequestMapping("/api/documents")
 public class DocumentController {
 
-    private final DocumentRepository documentRepository;
+    private final JpaDocumentRepository documentRepository;
 
-    public DocumentController(DocumentRepository documentRepository) {
+    public DocumentController(JpaDocumentRepository documentRepository) {
         this.documentRepository = documentRepository;
     }
 

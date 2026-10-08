@@ -1,18 +1,16 @@
 package com.ragnest.core.repository;
 
 import com.ragnest.core.model.Chunk;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * 文档切片仓储接口。
+ * 文档切片 JPA 仓储。
  */
-public interface ChunkRepository {
-
-    Chunk save(Chunk chunk);
-
-    Optional<Chunk> findById(Long id);
+@Repository
+public interface JpaChunkRepository extends JpaRepository<Chunk, Long> {
 
     List<Chunk> findByDocumentId(Long documentId);
 

@@ -1,7 +1,7 @@
 package com.ragnest.ai.tool;
 
 import com.ragnest.core.model.KnowledgeBase;
-import com.ragnest.core.repository.KnowledgeBaseRepository;
+import com.ragnest.core.repository.JpaKnowledgeBaseRepository;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 
@@ -15,9 +15,9 @@ import java.util.Optional;
  */
 public class KnowledgeBaseTools {
 
-    private final KnowledgeBaseRepository knowledgeBaseRepository;
+    private final JpaKnowledgeBaseRepository knowledgeBaseRepository;
 
-    public KnowledgeBaseTools(KnowledgeBaseRepository knowledgeBaseRepository) {
+    public KnowledgeBaseTools(JpaKnowledgeBaseRepository knowledgeBaseRepository) {
         this.knowledgeBaseRepository = knowledgeBaseRepository;
     }
 

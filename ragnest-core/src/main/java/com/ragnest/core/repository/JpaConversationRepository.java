@@ -1,22 +1,18 @@
 package com.ragnest.core.repository;
 
 import com.ragnest.core.model.Conversation;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * 会话仓储接口。
+ * 会话 JPA 仓储。
  */
-public interface ConversationRepository {
-
-    Conversation save(Conversation conversation);
-
-    Optional<Conversation> findById(Long id);
+@Repository
+public interface JpaConversationRepository extends JpaRepository<Conversation, Long> {
 
     List<Conversation> findByTenantId(String tenantId);
 
     List<Conversation> findByKnowledgeBaseId(Long knowledgeBaseId);
-
-    void deleteById(Long id);
 }

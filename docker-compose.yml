@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ragnest-postgres
+    environment:
+      POSTGRES_DB: ragnest
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ragnest-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ragnest"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ragnest-pgdata:

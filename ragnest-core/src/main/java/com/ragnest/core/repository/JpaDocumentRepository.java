@@ -1,22 +1,18 @@
 package com.ragnest.core.repository;
 
 import com.ragnest.core.model.Document;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * 文档仓储接口。
+ * 文档 JPA 仓储。
  */
-public interface DocumentRepository {
-
-    Document save(Document document);
-
-    Optional<Document> findById(Long id);
+@Repository
+public interface JpaDocumentRepository extends JpaRepository<Document, Long> {
 
     List<Document> findByKnowledgeBaseId(Long knowledgeBaseId);
 
     List<Document> findByTenantId(String tenantId);
-
-    void deleteById(Long id);
 }
