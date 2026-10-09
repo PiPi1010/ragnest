@@ -1,4 +1,4 @@
-package com.ragnest.tenant;
+package com.ragnest.common.tenant;
 
 /**
  * 租户上下文。

@@ -1,5 +1,7 @@
 package com.ragnest.tenant;
 
+import com.ragnest.common.tenant.TenantContext;
+
 /**
  * 租户数据隔离接口。
  *

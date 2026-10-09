@@ -1,18 +1,22 @@
 package com.ragnest.parser;
 
+import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
+import org.springframework.core.io.InputStreamResource;
+
 import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * PDF 文档解析器（占位实现）。
+ * PDF 文档解析器。
  *
- * <p>PDF 解析需引入 PDFBox 等依赖。Spring AI 2.0 对 PDF 文档读取做了精简，
- * 接入时需：</p>
- * <ol>
- *   <li>引入 {@code spring-ai-pdf-document-reader} 或直接使用 Apache PDFBox</li>
- *   <li>处理扫描件（需 OCR）与文本型 PDF 的差异</li>
- * </ol>
+ * <p>基于 Spring AI 的 {@link PagePdfDocumentReader}（底层 Apache PDFBox）按页提取文本。</p>
  *
- * <p>当前为占位，待明确 PDF 解析方案后实现。</p>
+ * <p>注意：仅支持文本型 PDF。扫描件（图片型 PDF）需额外接入 OCR，
+ * 当前会得到空文本，后续可扩展。</p>
  */
 public class PdfDocumentParser implements DocumentParser {
 
@@ -24,6 +28,27 @@ public class PdfDocumentParser implements DocumentParser {
 
     @Override
     public ParsedDocument parse(InputStream inputStream, String filename) {
-        throw new UnsupportedOperationException("PDF 解析尚未接入");
+        List<Document> pages;
+        try {
+            PagePdfDocumentReader reader = new PagePdfDocumentReader(new InputStreamResource(inputStream));
+            pages = reader.get();
+        } catch (Exception e) {
+            throw new IllegalStateException("解析 PDF 文档失败: " + e.getMessage(), e);
+        }
+
+        String content = pages.stream()
+                .map(Document::getText)
+                .filter(text -> text != null && !text.isBlank())
+                .collect(Collectors.joining("\n\n"));
+
+        Map<String, Object> metadata = new LinkedHashMap<>();
+        metadata.put("filename", filename);
+        metadata.put("fileType", "pdf");
+        metadata.put("pageCount", pages.size());
+
+        return ParsedDocument.builder()
+                .content(content)
+                .metadata(metadata)
+                .build();
     }
 }

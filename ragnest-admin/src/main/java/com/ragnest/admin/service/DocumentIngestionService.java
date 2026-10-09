@@ -5,7 +5,7 @@ import com.ragnest.core.model.Document;
 import com.ragnest.core.repository.JpaChunkRepository;
 import com.ragnest.core.repository.JpaDocumentRepository;
 import com.ragnest.parser.pipeline.DocumentIngestionPipeline;
-import com.ragnest.tenant.TenantContext;
+import com.ragnest.common.tenant.TenantContext;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

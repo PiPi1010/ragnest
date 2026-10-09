@@ -29,6 +29,10 @@ ragnest:
   jwt:
     secret: dev-secret-key-change-me-in-production-0123456789
     expiration: 86400000
+  auth:
+    username: admin
+    password: admin123
+    tenant-id: default
   vector:
     dimensions: 1024
     table-name: vector_store

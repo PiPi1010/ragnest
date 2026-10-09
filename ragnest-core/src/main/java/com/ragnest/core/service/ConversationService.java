@@ -17,6 +17,9 @@ public interface ConversationService {
     /** 追加消息 */
     Conversation addMessage(Long conversationId, Message message);
 
+    /** 查询会话历史消息（按时间升序，用于多轮对话上下文） */
+    List<Message> getHistory(Long conversationId);
+
     /** 根据 ID 查询（含消息列表） */
     Optional<Conversation> findById(Long id);
 

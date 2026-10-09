@@ -2,6 +2,7 @@ package com.ragnest.core.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Entity
 @Table(name = "knowledge_base")
-public class KnowledgeBase extends BaseEntity {
+@EntityListeners(TenantEntityListener.class)
+public class KnowledgeBase extends BaseEntity implements TenantAware {
 
     /** 名称 */
     @Column(nullable = false, length = 128)

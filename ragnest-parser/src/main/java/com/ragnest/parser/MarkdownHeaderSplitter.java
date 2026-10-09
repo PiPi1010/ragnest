@@ -38,15 +38,14 @@ public class MarkdownHeaderSplitter extends TextSplitter {
 
         int lastIndex = 0;
         String currentHeader = "";
-        int currentLevel = 0;
 
         while (matcher.find()) {
             int level = matcher.group(1).length();
             String header = matcher.group(2).trim();
 
-            // 只按 >= minHeaderLevel 的标题切分
-            if (level <= minHeaderLevel || currentHeader.isEmpty()) {
-                // 记录上一个 chunk
+            // 只按 >= minHeaderLevel 的标题切分（更深的标题也切）
+            if (level >= minHeaderLevel) {
+                // 记录上一个 chunk（标题前的正文）
                 if (lastIndex < matcher.start()) {
                     addChunk(chunks, text, lastIndex, matcher.start(), currentHeader);
                 }

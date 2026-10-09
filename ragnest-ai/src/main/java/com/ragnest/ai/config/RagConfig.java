@@ -7,6 +7,7 @@ import com.ragnest.ai.rag.postprocessor.RerankPostProcessor;
 import com.ragnest.ai.rag.retriever.VectorStoreDocumentRetriever;
 import com.ragnest.ai.rag.transformer.NoopQueryTransformer;
 import com.ragnest.ai.tool.KnowledgeBaseTools;
+import com.ragnest.core.repository.JpaDocumentRepository;
 import com.ragnest.core.repository.JpaKnowledgeBaseRepository;
 import org.springframework.ai.rag.postretrieval.document.DocumentPostProcessor;
 import org.springframework.ai.rag.preretrieval.query.transformation.QueryTransformer;
@@ -64,7 +65,8 @@ public class RagConfig {
     }
 
     @Bean
-    public KnowledgeBaseTools knowledgeBaseTools(JpaKnowledgeBaseRepository repository) {
-        return new KnowledgeBaseTools(repository);
+    public KnowledgeBaseTools knowledgeBaseTools(JpaKnowledgeBaseRepository knowledgeBaseRepository,
+                                                 JpaDocumentRepository documentRepository) {
+        return new KnowledgeBaseTools(knowledgeBaseRepository, documentRepository);
     }
 }

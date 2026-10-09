@@ -31,12 +31,14 @@ public class KnowledgeBaseController {
      * 创建知识库。
      */
     @PostMapping
-    public Result<KnowledgeBaseVO> create(@Valid @RequestBody KnowledgeBaseCreateRequest request) {
+    public Result<KnowledgeBaseVO> create(@Valid @RequestBody KnowledgeBaseCreateRequest request,
+                                          @RequestHeader(value = "X-Tenant-Id", required = false) String tenantId) {
         KnowledgeBase kb = KnowledgeBase.builder()
                 .name(request.getName())
                 .description(request.getDescription())
                 .vectorDimension(request.getVectorDimension())
                 .embeddingModel(request.getEmbeddingModel())
+                .tenantId(tenantId)
                 .build();
 
         KnowledgeBase created = knowledgeBaseService.create(kb);

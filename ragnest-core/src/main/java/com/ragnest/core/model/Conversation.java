@@ -3,6 +3,7 @@ package com.ragnest.core.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -25,7 +26,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "conversation")
-public class Conversation extends BaseEntity {
+@EntityListeners(TenantEntityListener.class)
+public class Conversation extends BaseEntity implements TenantAware {
 
     /** 会话标题 */
     @Column(length = 256)

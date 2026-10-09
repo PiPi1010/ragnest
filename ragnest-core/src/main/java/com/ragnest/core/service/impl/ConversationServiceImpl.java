@@ -39,6 +39,14 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Message> getHistory(Long conversationId) {
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new IllegalArgumentException("会话不存在: " + conversationId));
+        return List.copyOf(conversation.getMessages());
+    }
+
+    @Override
     public Optional<Conversation> findById(Long id) {
         return conversationRepository.findById(id);
     }

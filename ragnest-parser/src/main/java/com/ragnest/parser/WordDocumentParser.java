@@ -1,17 +1,19 @@
 package com.ragnest.parser;
 
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+
 import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Word 文档解析器（占位实现）。
+ * Word 文档解析器。
  *
- * <p>Word（.docx）解析需引入 Apache POI 等依赖。接入时：</p>
- * <ol>
- *   <li>引入 Apache POI（poi-ooxml）</li>
- *   <li>处理 .doc（旧格式，需 poi-scratchpad）与 .docx 的差异</li>
- * </ol>
- *
- * <p>当前为占位，待明确 Word 解析方案后实现。</p>
+ * <p>基于 Apache POI 解析 {@code .docx} 文档，逐段提取文本。
+ * 旧格式 {@code .doc} 需 poi-scratchpad，当前暂不支持（抛出明确提示）。</p>
  */
 public class WordDocumentParser implements DocumentParser {
 
@@ -23,6 +25,24 @@ public class WordDocumentParser implements DocumentParser {
 
     @Override
     public ParsedDocument parse(InputStream inputStream, String filename) {
-        throw new UnsupportedOperationException("Word 解析尚未接入");
+        String content;
+        try (XWPFDocument document = new XWPFDocument(inputStream)) {
+            List<XWPFParagraph> paragraphs = document.getParagraphs();
+            content = paragraphs.stream()
+                    .map(XWPFParagraph::getText)
+                    .filter(text -> text != null && !text.isBlank())
+                    .collect(Collectors.joining("\n"));
+        } catch (Exception e) {
+            throw new IllegalStateException("解析 Word 文档失败（仅支持 .docx）: " + e.getMessage(), e);
+        }
+
+        Map<String, Object> metadata = new LinkedHashMap<>();
+        metadata.put("filename", filename);
+        metadata.put("fileType", "docx");
+
+        return ParsedDocument.builder()
+                .content(content)
+                .metadata(metadata)
+                .build();
     }
 }
